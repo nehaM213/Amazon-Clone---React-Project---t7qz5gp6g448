@@ -50,7 +50,7 @@ function HeaderBottom() {
                 </h3>
                 <span
                   onClick={() => setSidebar(false)}
-                  className="cursor-pointer absolute top-0 left-[74%] md:left-[310px] bg-transparent w-10 h-10 flex items-center justify-center hover:text-red-400 text-white duration-300"
+                  className="cursor-pointer absolute top-0 left-[74%] md:left-[310px] xs:left-[68%] bg-transparent w-10 h-10 flex items-center justify-center hover:text-red-400 text-white duration-300"
                 >
                   <CloseIcon />
                 </span>
