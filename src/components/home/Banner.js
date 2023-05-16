@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Slider from "react-slick";
+import React from 'react';
+
 import {
   bannerImgFive,
 } from "../../assets/index";

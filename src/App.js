@@ -3,7 +3,6 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import {
   createBrowserRouter,
-  createRoutesElements,
   createRoutesFromElements,
   Outlet,
   Route,
