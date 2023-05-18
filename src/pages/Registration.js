@@ -50,7 +50,7 @@ function Registration() {
       <div className="w-full bg-gray-100 pb-10">
         <form className="w-[350px] mx-auto flex flex-col items-center">
           <Link to="/">
-          <img src={darkLogo} className="w-32 mt-5 mb-2" alt="darkLogo" />
+            <img src={darkLogo} className="w-32 mt-5 mb-2" alt="darkLogo" />
           </Link>
           <div className="w-full border border-zinc-200 p-6">
             <h2 className="font-titleFont text-3xl font-medium mb-4">
@@ -124,10 +124,7 @@ function Registration() {
                   Password must be atleast 6 characters
                 </p>
               </div>
-              <button
-                onClick={handleRegistration}
-                className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
-              >
+              <button onClick={handleRegistration} className="yellowButton">
                 Continue
               </button>
             </div>
