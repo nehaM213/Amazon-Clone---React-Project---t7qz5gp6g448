@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState={
-    products:[],
-    userInfo:[],
-}
+const initialState = {
+  products: [],
+  userInfo: [],
+  userSearch: "",
+  resultNotFound:false
+};
 
 export const amazonSlice=createSlice({
     name:"amazon",
@@ -35,6 +37,12 @@ export const amazonSlice=createSlice({
         },
         resetCart:(state)=>{
             state.products=[]
+        },
+        setUserSearch:(state,action)=>{
+            state.userSearch=(action.payload);
+        },
+        setResultNotFound:(state,action)=>{
+            state.resultNotFound=(action.payload);
         }
     }
 })
@@ -44,5 +52,7 @@ export const {
   resetCart,
   incrementQuantity,
   decrementQuantity,
+  setUserSearch,
+  setResultNotFound,
 } = amazonSlice.actions;
 export default amazonSlice.reducer;

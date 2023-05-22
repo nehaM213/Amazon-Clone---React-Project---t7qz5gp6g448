@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {logo} from "../../assets/index";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
@@ -7,11 +7,26 @@ import { allItems } from "../../constants";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HeaderBottom from './HeaderBottom';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserSearch, setResultNotFound } from "../../redux/amazonSlice";
 
 function Header() {
+    const dispatch = useDispatch();
+    const [searchItem,setSearchItem]=useState("");
     const [showAll,setShowAll]=useState(false);
-    const products=useSelector((state)=>state.amazonReducer.products);
+    const products=useSelector((state)=>state.amazon.products);
+    useEffect(()=>{
+      if (searchItem.trim().length === 0) {
+        handleUserSearch();
+        dispatch(setResultNotFound(false));
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[searchItem])
+    const handleUserSearch=()=>{
+      dispatch(setUserSearch({ searchItem }));
+    }
+    // const search = useSelector((state) => state.amazon.userSearch);
+
   return (
     <div className="w-full sticky top-0 z-50">
       <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center md1:justify-between sm:justify-between gap-4">
@@ -54,8 +69,19 @@ function Header() {
           <input
             className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
             type="text"
+            onChange={(e)=>{
+              setSearchItem(e.target.value.toLocaleLowerCase());
+            }}
+            onKeyDown={(e)=>{
+              if(e.key === 'Enter'){
+                handleUserSearch();
+              }
+            }}
+            value={searchItem}
           />
-          <span className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
+          <span className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md" onClick={()=>
+            {handleUserSearch()}
+          }>
             <SearchIcon />
           </span>
         </div>
