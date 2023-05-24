@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
-  userInfo: [],
+  userInfo: null,
   userSearch: "",
   resultNotFound:false
 };
@@ -43,6 +43,13 @@ export const amazonSlice=createSlice({
         },
         setResultNotFound:(state,action)=>{
             state.resultNotFound=(action.payload);
+        },
+        setUserInfo:(state,action)=>{
+            state.userInfo=action.payload;
+        }
+        ,
+        userSignOut:(state)=>{
+            state.userInfo=null;
         }
     }
 })
@@ -54,5 +61,7 @@ export const {
   decrementQuantity,
   setUserSearch,
   setResultNotFound,
+  setUserInfo,
+  userSignOut,
 } = amazonSlice.actions;
 export default amazonSlice.reducer;

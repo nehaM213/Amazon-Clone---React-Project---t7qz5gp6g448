@@ -6,12 +6,13 @@ import App from './App';
 import { store, persistor } from "./redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react';
+import firebaseConfig from './firebase.config';
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <PersistGate loading={"loading"} persistor={persistor}>
+    <PersistGate loading={"loading"} persistor={persistor} firebaseConfig={firebaseConfig}>
       <App />
     </PersistGate>
   </Provider>

@@ -4,10 +4,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SideNavContent from './SideNavContent';
 import {motion} from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 function HeaderBottom() {
     const ref=useRef();
     const [sidebar,setSidebar]=useState(false);
+    const userInfo = useSelector((state) => state.amazon.userInfo);
     useEffect(()=>{
         document.body.addEventListener("click",(e)=>{
             if(e.target.contains(ref.current)){
@@ -37,7 +39,8 @@ function HeaderBottom() {
       {sidebar && (
         <div className="w-full h-screen text-black fixed top-0 left-0 bg-amazon_blue bg-opacity-50">
           <div className="w-full h-full relative">
-            <motion.div ref={ref}
+            <motion.div
+              ref={ref}
               initial={{ x: -500, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
@@ -45,9 +48,15 @@ function HeaderBottom() {
             >
               <div className="w-full bg-amazon_light text-white py-2 px-6 flex items-center gap-4">
                 <AccountCircleIcon />
-                <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                  Hello, Sign In
-                </h3>
+                {userInfo ? (
+                  <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                    {userInfo.userName}
+                  </h3>
+                ) : (
+                  <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                    Hello, Sign In
+                  </h3>
+                )}
                 <span
                   onClick={() => setSidebar(false)}
                   className="cursor-pointer absolute top-0 left-[74%] md:left-[310px] xs:left-[68%] bg-transparent w-10 h-10 flex items-center justify-center hover:text-red-400 text-white duration-300"

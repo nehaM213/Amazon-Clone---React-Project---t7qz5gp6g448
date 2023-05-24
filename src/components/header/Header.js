@@ -3,18 +3,23 @@ import {logo} from "../../assets/index";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { allItems } from "../../constants";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HeaderBottom from './HeaderBottom';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserSearch, setResultNotFound } from "../../redux/amazonSlice";
+import { setUserSearch, setResultNotFound, userSignOut } from "../../redux/amazonSlice";
+import { getAuth, signOut } from "firebase/auth";
 
 function Header() {
+    const auth = getAuth();
     const dispatch = useDispatch();
     const [searchItem,setSearchItem]=useState("");
     const [showAll,setShowAll]=useState(false);
     const products=useSelector((state)=>state.amazon.products);
+    const userInfo=useSelector((state)=>state.amazon.userInfo);
+    console.log(userInfo, "user info");
     useEffect(()=>{
       if (searchItem.trim().length === 0) {
         handleUserSearch();
@@ -25,7 +30,17 @@ function Header() {
     const handleUserSearch=()=>{
       dispatch(setUserSearch({ searchItem }));
     }
-    // const search = useSelector((state) => state.amazon.userSearch);
+    const handleLogout=()=>{
+      signOut(auth)
+        .then(() => {
+          dispatch(userSignOut());
+        })
+        .catch((error) => {
+          // An error happened.
+          console.log("error logging out")
+        });
+
+    }
 
   return (
     <div className="w-full sticky top-0 z-50">
@@ -69,27 +84,37 @@ function Header() {
           <input
             className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
             type="text"
-            onChange={(e)=>{
+            onChange={(e) => {
               setSearchItem(e.target.value.toLocaleLowerCase());
             }}
-            onKeyDown={(e)=>{
-              if(e.key === 'Enter'){
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
                 handleUserSearch();
               }
             }}
             value={searchItem}
           />
-          <span className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md" onClick={()=>
-            {handleUserSearch()}
-          }>
+          <span
+            className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md"
+            onClick={() => {
+              handleUserSearch();
+            }}
+          >
             <SearchIcon />
           </span>
         </div>
         <Link to="/signin">
           <div className="flex flex-col items-start justify-center headerHover ">
-            <p className="text-sm md1:text-xs text-white md1:text-lightText font-light">
-              Hello, sign in
-            </p>
+            {userInfo ? (
+              <p className="text-sm text-gray-100 font-medium">
+                Hello {userInfo.userName}
+              </p>
+            ) : (
+              <p className="text-sm md1:text-xs text-white md1:text-lightText font-light">
+                Hello, sign in
+              </p>
+            )}
+
             <p
               className="text-sm font-semibold -mt-1 text-whiteT
              hidden md1:inline-flex"
@@ -102,7 +127,7 @@ function Header() {
           </div>
         </Link>
         <div className="hidden lgl:flex flex-col items-start justify-center headerHover">
-          <p className="text-xs text-lightText font-light">Returns</p>
+          <p className="text-sm text-lightText font-light">Returns</p>
           <p
             className="text-sm font-semibold -mt-1 text-whiteT
             "
@@ -121,6 +146,12 @@ function Header() {
             </p>
           </div>
         </Link>
+        {userInfo && (
+          <div onClick={handleLogout} className="flex flex-col justify-center items-center headerHover relative">
+            <LogoutIcon />
+            <p className='hidden md1:inline-flex text-xs font-semibold text-whiteText'>Log out</p>
+          </div>
+        )}
       </div>
       <HeaderBottom />
     </div>

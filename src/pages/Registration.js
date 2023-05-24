@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { darkLogo } from "../assets/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 function Registration() {
+  const navigate=useNavigate();
+  const auth = getAuth();
     const [clientName,setClientName]=useState("");
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
@@ -12,8 +15,11 @@ function Registration() {
     const [errEmail,setErrEmail]=useState("");
     const [errPassword,setErrPassword]=useState("");
     const [errCPassword,setErrCPassword]=useState("");
+    const [success,setSuccess]=useState(false)
 
-
+    const emailValidation=(email)=>{
+      return String(email).toLowerCase().match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
+    };
     const handleRegistration=(e)=>{
         e.preventDefault();
         if(!clientName){
@@ -25,7 +31,7 @@ function Registration() {
             // return false;
         }
         if(!password){
-            setErrPassword("Enter yout password");
+            setErrPassword("Enter your password");
             // return false;
         }
         else{
@@ -43,6 +49,34 @@ function Registration() {
                 setErrCPassword("Password not matched");
                 // return false;
             }
+        }
+        if(clientName && email && emailValidation(email) && password && password.length>=6 && cPassword && cPassword===password){
+          createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              // Signed in
+              updateProfile(auth.currentUser,{displayName:clientName});
+              setSuccess(true);
+              const user = userCredential.user;
+              // user.displayName=clientName;
+              console.log(user);
+              
+              // setTimeout(()=>{
+                navigate("/signin")
+              // },2000);
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              if(errorCode.includes("auth/email-already-in-use")){
+                setErrEmail("Email Already in use, Try another one");
+              }
+              // ..
+            });
+          setClientName("");
+          setEmail("");
+          setPassword("");
+          setCPassword("");
+          setErrCPassword("");
+          setErrEmail("");
         }
     }
   return (
@@ -64,6 +98,7 @@ function Registration() {
                     setClientName(e.target.value);
                     setErrClientName("");
                   }}
+                  value={clientName}
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                   type="text"
                 ></input>
@@ -80,6 +115,7 @@ function Registration() {
                     setEmail(e.target.value);
                     setErrEmail("");
                   }}
+                  value={email}
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                   type="email"
                 ></input>
@@ -96,6 +132,7 @@ function Registration() {
                     setPassword(e.target.value);
                     setErrPassword("");
                   }}
+                  value={password}
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                   type="password"
                 ></input>
@@ -112,6 +149,7 @@ function Registration() {
                     setCPassword(e.target.value);
                     setErrCPassword("");
                   }}
+                  value={cPassword}
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                   type="password"
                 ></input>
@@ -124,6 +162,12 @@ function Registration() {
                   Password must be atleast 6 characters
                 </p>
               </div>
+              {success && (
+                <div className="text-base font-titleFont font-semibold text-green-500 border-[1px] border-green-500 px-2 text-center">
+                  Account Created Successfully
+                </div>
+              )}
+
               <button onClick={handleRegistration} className="yellowButton">
                 Continue
               </button>

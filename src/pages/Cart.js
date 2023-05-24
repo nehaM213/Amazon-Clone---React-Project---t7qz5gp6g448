@@ -8,12 +8,18 @@ import {
   decrementQuantity,
 } from "../redux/amazonSlice";
 import { emptyCart } from "../assets/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { TonalitySharp } from "@mui/icons-material";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 function Cart() {
     const dispatch=useDispatch();
+    const navigate=useNavigate();
   const products = useSelector((state) => state.amazon.products);
   const [totalPrice,setTotalPrice]=useState("");
+  const userInfo = useSelector((state) => state.amazon.userInfo);
+  const [payNow,setPayNow]=useState(false);
   useEffect(()=>{
     let Total=0;
     products.map((item)=>{
@@ -21,6 +27,23 @@ function Cart() {
         return setTotalPrice(Total.toFixed(2));
     })
   });
+  const handleCheckout=()=>{
+    if(userInfo){
+      setPayNow(true);
+    }
+    else{
+      setTimeout(()=>{
+        navigate("/signin");
+      },2000)
+      
+    }
+  }
+  const payment=async(token)=>{
+    await axios.post("http://localhost:8000/pay",{
+      amount:totalPrice*100,
+      token:token
+    });
+  }
 
   return (
     <div className="w-full bg-gray-100 p-4">
@@ -29,7 +52,7 @@ function Cart() {
           <div className="w-full h-full bg-white px-4 col-span-3">
             <div className="font-titleFont flex items-center justify-between border-b-[1px] border-b-gray-400 py-3">
               <h2 className="text-3xl font-medium">Shopping Cart</h2>
-              <h4 className="text-xl font-normal">Subtitle</h4>
+              <h4 className="text-xl font-normal">Price</h4>
             </div>
             {/* products start here */}
             <div>
@@ -118,7 +141,22 @@ function Cart() {
                 </span>
               </p>
             </div>
-            <button className="yellowButton">Proceed to Pay</button>
+            <button className="yellowButton" onClick={handleCheckout}>
+              Proceed to Pay
+            </button>
+            {payNow && (
+              <div className="w-full mt-6 flex items-center justify-center">
+                <StripeCheckout
+                  token={payment}
+                  stripeKey="pk_test_51NAuloSDprkVgkWw4QpRGweNTNP4jQYs9p05s9wG5mUikrHseAoVb7aGJjlY5qvziIEhS3GHFjhL6xBJJI7KNev200eTkFlSia"
+                  name="Amazon Clone"
+                  amount={totalPrice*100}
+                  Label="Place your order and pay"
+                  description={`Your Payment amount is $${totalPrice}`}
+                  email={userInfo.email}
+                />
+              </div>
+            )}
           </div>
         </div>
       ) : (
@@ -136,8 +174,8 @@ function Cart() {
             </h1>
             <p className="text-sm text-center">
               {" "}
-              Your Shopping cart lives to serve. Give it a purpose - fill it with
-              books, electronics, videos, etc. and make it happy.
+              Your Shopping cart lives to serve. Give it a purpose - fill it
+              with books, electronics, videos, etc. and make it happy.
             </p>
             <Link to="/" className="w-full">
               <button className="yellowButton ">Continue Shopping</button>
