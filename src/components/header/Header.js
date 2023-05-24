@@ -36,10 +36,8 @@ function Header() {
           dispatch(userSignOut());
         })
         .catch((error) => {
-          // An error happened.
           console.log("error logging out")
         });
-
     }
 
   return (
@@ -114,7 +112,6 @@ function Header() {
                 Hello, sign in
               </p>
             )}
-
             <p
               className="text-sm font-semibold -mt-1 text-whiteT
              hidden md1:inline-flex"

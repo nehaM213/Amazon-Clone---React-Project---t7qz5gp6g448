@@ -9,7 +9,6 @@ import {
 } from "../redux/amazonSlice";
 import { emptyCart } from "../assets/index";
 import { Link, useNavigate } from "react-router-dom";
-import { TonalitySharp } from "@mui/icons-material";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 

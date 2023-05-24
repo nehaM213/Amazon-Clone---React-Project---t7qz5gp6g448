@@ -43,7 +43,6 @@ function Signin() {
             })
             .catch((error) => {
               const errorCode = error.code;
-              const errorMessage = error.message;
               if (errorCode === "auth/wrong-password"){
                 setErrPassword("Incorrect Password");
               }
