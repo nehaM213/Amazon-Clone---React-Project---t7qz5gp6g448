@@ -101,7 +101,54 @@ function Header() {
             <SearchIcon />
           </span>
         </div>
-        <Link to="/signin">
+        {userInfo ? (
+          <Link to="/accountAndList">
+            <div className="flex flex-col items-start justify-center headerHover ">
+              {userInfo ? (
+                <p className="text-sm text-gray-100 font-medium">
+                  Hello {userInfo.userName}
+                </p>
+              ) : (
+                <p className="text-sm md1:text-xs text-white md1:text-lightText font-light">
+                  Hello, sign in
+                </p>
+              )}
+              <p
+                className="text-sm font-semibold -mt-1 text-whiteT
+             hidden md1:inline-flex"
+              >
+                Accounts & Lists{" "}
+                <span>
+                  <ArrowDropDownOutlinedIcon />
+                </span>
+              </p>
+            </div>
+          </Link>
+        ) : (
+          <Link to="/signin">
+            <div className="flex flex-col items-start justify-center headerHover ">
+              {userInfo ? (
+                <p className="text-sm text-gray-100 font-medium">
+                  Hello {userInfo.userName}
+                </p>
+              ) : (
+                <p className="text-sm md1:text-xs text-white md1:text-lightText font-light">
+                  Hello, sign in
+                </p>
+              )}
+              <p
+                className="text-sm font-semibold -mt-1 text-whiteT
+             hidden md1:inline-flex"
+              >
+                Accounts & Lists{" "}
+                <span>
+                  <ArrowDropDownOutlinedIcon />
+                </span>
+              </p>
+            </div>
+          </Link>
+        )}
+        {/* <Link to="/signin">
           <div className="flex flex-col items-start justify-center headerHover ">
             {userInfo ? (
               <p className="text-sm text-gray-100 font-medium">
@@ -122,7 +169,7 @@ function Header() {
               </span>
             </p>
           </div>
-        </Link>
+        </Link> */}
         <div className="hidden lgl:flex flex-col items-start justify-center headerHover">
           <p className="text-sm text-lightText font-light">Returns</p>
           <p
@@ -144,9 +191,14 @@ function Header() {
           </div>
         </Link>
         {userInfo && (
-          <div onClick={handleLogout} className="flex flex-col justify-center items-center headerHover relative">
+          <div
+            onClick={handleLogout}
+            className="flex flex-col justify-center items-center headerHover relative"
+          >
             <LogoutIcon />
-            <p className='hidden md1:inline-flex text-xs font-semibold text-whiteText'>Log out</p>
+            <p className="hidden md1:inline-flex text-xs font-semibold text-whiteText">
+              Log out
+            </p>
           </div>
         )}
       </div>

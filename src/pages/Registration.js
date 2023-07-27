@@ -15,7 +15,9 @@ function Registration() {
     const [errEmail,setErrEmail]=useState("");
     const [errPassword,setErrPassword]=useState("");
     const [errCPassword,setErrCPassword]=useState("");
-    const [success,setSuccess]=useState(false)
+    const [success,setSuccess]=useState(false);
+
+    const [disable,setDisable]=useState(false);//disable signup button after signup
 
     const emailValidation=(email)=>{
       return String(email).toLowerCase().match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
@@ -24,25 +26,20 @@ function Registration() {
         e.preventDefault();
         if(!clientName){
             setErrClientName("Enter your name");
-            // return false;
         }
         if(!email){
             setErrEmail("Enter your email");
-            // return false;
         }
         if(!password){
             setErrPassword("Enter your password");
-            // return false;
         }
         else{
             if(password.length<6){
                 setErrPassword("Password must be atleast 6 characters");
-                // return false;
             }
         }
         if(!cPassword){
             setErrCPassword("Confirm your password");
-            // return false;
         }
         else{
             if(cPassword!== password){
@@ -54,15 +51,16 @@ function Registration() {
           createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               // Signed in
+              setDisable(true);
               updateProfile(auth.currentUser,{displayName:clientName});
               setSuccess(true);
               const user = userCredential.user;
               // user.displayName=clientName;
               console.log(user);
               
-              // setTimeout(()=>{
+              setTimeout(()=>{
                 navigate("/signin")
-              // },2000);
+              },2000);
             })
             .catch((error) => {
               const errorCode = error.code;
@@ -168,7 +166,7 @@ function Registration() {
                 </div>
               )}
 
-              <button onClick={handleRegistration} className="yellowButton">
+              <button type="button" onClick={handleRegistration} className="yellowButton" disabled={disable}>
                 Continue
               </button>
             </div>

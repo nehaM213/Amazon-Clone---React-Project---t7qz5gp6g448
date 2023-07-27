@@ -17,7 +17,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["products", "userInfo"],
+  whitelist: ["products", "userInfo","wishList"],
 };
 
 const persistedReducer = persistReducer(persistConfig, amazonReducer);

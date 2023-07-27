@@ -6,56 +6,61 @@ import { useDispatch } from 'react-redux';
 import { setUserInfo } from '../redux/amazonSlice';
 
 function Signin() {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = getAuth();
-    const [email,setEmail]=useState("");
-    const [password,setPassword]=useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [errEmail, setErrEmail] = useState("");
-    const [errPassword, setErrPassword] = useState("");
+  const [errEmail, setErrEmail] = useState("");
+  const [errPassword, setErrPassword] = useState("");
 
+  const [disable, setDisable] = useState(false); //disable signup button after signup
 
-    const handleSignin=(e)=>{
-        e.preventDefault();
-        if(!email){
-            setErrEmail("Enter your email");
-        }
-        if(!password){
-            setErrPassword("Enter yout password");
-        }
-        if(email && password){
-          // console.log(email,password)
-          signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-              // Signed in
-              const user = userCredential.user;
-              // console.log(user.displayName);
-              dispatch(setUserInfo({_id:user.uid,
-              userName:user.displayName,
-              email:user.email
-            }))
-              setEmail("");
-              setPassword("");
-              // setTimeout(()=>{
-                navigate("/")
-              // },2000);
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              if (errorCode === "auth/wrong-password"){
-                setErrPassword("Incorrect Password");
-              }
-              if (errorCode === "auth/user-not-found"){
-                setErrEmail("Email does not exists");
-              } 
-              if (errorCode === "auth/invalid-email"){
-                setErrEmail("Invalid Email");
-              } console.log(errorCode);
-            });
-          
-        }
+  const handleSignin = (e) => {
+    e.preventDefault();
+    if (!email) {
+      setErrEmail("Enter your email");
     }
+    if (!password) {
+      setErrPassword("Enter yout password");
+    }
+    if (email && password) {
+      // console.log(email,password)
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          setDisable(true);
+          // Signed in
+          const user = userCredential.user;
+          // console.log(user.displayName);
+          dispatch(
+            setUserInfo({
+              _id: user.uid,
+              userName: user.displayName,
+              email: user.email,
+            })
+          );
+          setEmail("");
+          setPassword("");
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          if (errorCode === "auth/wrong-password") {
+            setErrPassword("Incorrect Password");
+          }
+          if (errorCode === "auth/user-not-found") {
+            setErrEmail("Email does not exists");
+          }
+          if (errorCode === "auth/invalid-email") {
+            setErrEmail("Invalid Email");
+          }
+          console.log(errorCode);
+        });
+    }
+  };
   return (
     <div className="w-full">
       <div className="w-full bg-gray-100 pb-10">
@@ -92,8 +97,7 @@ function Signin() {
                     setPassword(e.target.value);
                     setErrPassword("");
                   }}
-                  value={password
-                  }
+                  value={password}
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                   type="password"
                 ></input>
@@ -103,7 +107,11 @@ function Signin() {
                   </p>
                 )}
               </div>
-              <button onClick={handleSignin} className="yellowButton">
+              <button
+                onClick={handleSignin}
+                className="yellowButton"
+                disabled={disable}
+              >
                 Continue
               </button>
             </div>
