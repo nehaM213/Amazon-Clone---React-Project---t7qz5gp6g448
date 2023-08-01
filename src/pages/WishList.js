@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+// import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
   deleteItem,
 } from "../redux/amazonSlice";
 import { emptyCart } from "../assets/index";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+// import axios from "axios";
 
 function WishList() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const wishList = useSelector((state) => state.amazon.wishList);
-  const userInfo = useSelector((state) => state.amazon.userInfo);
-  useEffect(() => {
-    let Total = 0;
-    wishList.map((item) => {
-      Total += item.price * item.quantity;
-      return setTotalPrice(Total.toFixed(2));
-    });
-  });
-  const handleCheckout = () => {
-    if (userInfo) {
-      setPayNow(true);
-    } else {
-      setTimeout(() => {
-        navigate("/signin");
-      }, 2000);
-    }
-  };
-  const payment = async (token) => {
-    await axios.post("http://localhost:8000/pay", {
-      amount: totalPrice * 100,
-      token: token,
-    });
-  };
+  // const userInfo = useSelector((state) => state.amazon.userInfo);
+  // useEffect(() => {
+  //   let Total = 0;
+  //   wishList.map((item) => {
+  //     Total += item.price * item.quantity;
+  //     return setTotalPrice(Total.toFixed(2));
+  //   });
+  // });
+  // const handleCheckout = () => {
+  //   if (userInfo) {
+  //     setPayNow(true);
+  //   } else {
+  //     setTimeout(() => {
+  //       navigate("/signin");
+  //     }, 2000);
+  //   }
+  // };
+  // const payment = async (token) => {
+  //   await axios.post("http://localhost:8000/pay", {
+  //     amount: totalPrice * 100,
+  //     token: token,
+  //   });
+  // };
 
   return (
     <div className="w-full bg-gray-100 p-4">
@@ -71,7 +71,7 @@ function WishList() {
                           &#8377;{item.price}
                         </span>
                       </p>
-                      <div className="bg-[#F0F2F2] flex justify-center items-center gap-1 w-24 py-1 text-center drop-shadow-lg rounded-md ">
+                      {/* <div className="bg-[#F0F2F2] flex justify-center items-center gap-1 w-24 py-1 text-center drop-shadow-lg rounded-md ">
                         <p className="cursor-pointer bg-gray-200 px-1 rounded-md duration-300">
                           Qty:
                         </p>
@@ -88,7 +88,7 @@ function WishList() {
                         >
                           +
                         </p>
-                      </div>
+                      </div> */}
                       <button
                         onClick={() => dispatch(deleteItem(item.id))}
                         className="bg-red-500 w-36 py-1 rounded-lg text-white mt-2 hover:bg-red-700 active:bg-red-900 duration-300"
@@ -109,15 +109,15 @@ function WishList() {
             </div>
           </div>
           <div className="w-full h-52 bg-white col-span-1 flex flex-col  justify-center items-center p-4">
-            <div>
+            {/* <div>
               <p className="font-semibold px-10 py-1 flex items-center justify-between gap-2">
                 Total:{" "}
                 <span className="text-lg font-bold">
                   &#8377; {totalPrice ? totalPrice : 0}
                 </span>
               </p>
-            </div>
-            <button className="yellowButton" onClick={handleCheckout}>
+            </div> */}
+            {/* <button className="yellowButton" onClick={handleCheckout}>
               Proceed to Pay
             </button>
             {payNow && (
@@ -132,7 +132,7 @@ function WishList() {
                   email={userInfo.email}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       ) : (

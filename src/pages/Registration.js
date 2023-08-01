@@ -50,14 +50,10 @@ function Registration() {
         if(clientName && email && emailValidation(email) && password && password.length>=6 && cPassword && cPassword===password){
           createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-              // Signed in
               setDisable(true);
-              updateProfile(auth.currentUser,{displayName:clientName});
               setSuccess(true);
+              updateProfile(auth.currentUser,{displayName:clientName});
               const user = userCredential.user;
-              // user.displayName=clientName;
-              console.log(user);
-              
               setTimeout(()=>{
                 navigate("/signin")
               },2000);
@@ -67,7 +63,6 @@ function Registration() {
               if(errorCode.includes("auth/email-already-in-use")){
                 setErrEmail("Email Already in use, Try another one");
               }
-              // ..
             });
           setClientName("");
           setEmail("");

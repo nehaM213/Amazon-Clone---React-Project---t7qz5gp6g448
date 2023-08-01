@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToWishList } from "../../redux/amazonSlice";
 import { setResultNotFound } from "../../redux/amazonSlice";
 import { Link } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+// import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 function Products() {
   const dispatch=useDispatch();
@@ -13,6 +14,9 @@ function Products() {
   const [productData,setProductData] = useState(data.data);
   const wishList = useSelector((state) => state.amazon.wishList);
   const search = useSelector((state) => state.amazon.userSearch);
+  const likeButtonStyle={
+    color:"black",
+  }
   function handleAddToCart(e,item){
     e.preventDefault();
     dispatch(
@@ -29,6 +33,7 @@ function Products() {
   }
   function handleAddToWishList(e, item) {
     e.preventDefault();
+
     dispatch(
       addToWishList({
         id: item.id,
@@ -41,7 +46,6 @@ function Products() {
       })
     );
   }
-  // const [notFound,setNotFound]=useState(false);
   useEffect(() => {
     let ddata = productData.filter((item) =>{
       return (
@@ -51,7 +55,7 @@ function Products() {
       );
     }
     );
-    console.log(ddata);
+    console.log("wishlist",wishList);
     if (ddata.length && search.searchItem !== "") {
       setProductData(ddata);
       dispatch(setResultNotFound(false));
@@ -75,11 +79,18 @@ function Products() {
             key={item.id}
             className="bg-white h-auto border-[1px] border-gray-200 py-8 z-30 hover:border-transparent shadow-none hover:shadow-testShadow duration-200 flex flex-col gap-4 cursor-pointer  relative"
           >
-            <button className=" absolute top-1 right-1 text-red-600">
-              {wishList.filter((el) => {
-                if (el.id === item.id) return <FavoriteIcon />;
+            <button
+              className=" absolute top-1 right-1"
+              style={likeButtonStyle}
+              onClick={(e) => {
+                handleAddToWishList(e, item);
+              }}
+            >
+              {/* {wishList.filter((el) => {
                 return "";
-              })}
+              })} */}
+              
+              <FavoriteBorderIcon />
             </button>
             <div className="w-full h-auto flex items-center justify-center">
               <img

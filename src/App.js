@@ -15,6 +15,7 @@ import Registration from "./pages/Registration";
 import Cart from "./pages/Cart";
 import AccountAndList from "./pages/AccountAndList";
 import ProductView from "./pages/ProductView";
+import WishList from "./pages/WishList";
 
 const Layout=()=>{
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/accountAndList" element={<AccountAndList />}></Route>
           <Route path="/productView" element={<ProductView />}></Route>
+          <Route path="/wishList" element={<WishList />}></Route>
         </Route>
         <Route path="/signin" element={<Signin />}></Route>
         <Route path="/registration" element={<Registration />}></Route>

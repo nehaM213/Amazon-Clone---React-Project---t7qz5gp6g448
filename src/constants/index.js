@@ -83,3 +83,37 @@ export const middleList = [
     ],
   },
 ];
+export const accountsLists = [
+  {
+    _id:1,
+    title:"Your Lists",
+    listItems:[
+      "Your Wish List",
+      "Shopping List",
+      "Create a Wish List",
+      "Wish from Any Website",
+      "Baby Wishlist",
+      "Discover Your Style",
+      "Explore Showroom"
+    ],
+  },
+  {
+    _id:2,
+    title:"Your Account",
+    listItems:[
+      "Your Account",
+      "Your Orders",
+      "Your Wish List",
+      "Your Recommendations",
+      "Your Prime Membership",
+      "Your Prime Video",
+      "Your Subscribe & Save Items",
+      "Memberships & Subscriptions",
+      "Your Seller Account",
+      "Manage Your Content and Devices",
+      "Your Free Amazon Business Account",
+      "Switch Accounts",
+      "Sign Out"
+    ]
+  }
+];

@@ -21,12 +21,12 @@ export const amazonSlice = createSlice({
       }
     },
     addToWishList: (state, action) => {
-      const item = state.wishList.find((item) => item.id === action.payload.id);
-      if (item) {
-        item.quantity += action.payload.quantity;
-      } else {
+      // const item = state.wishList.find((item) => item.id === action.payload.id);
+      // if (item) {
+      //   item.quantity += action.payload.quantity;
+      // } else {
         state.wishList.push(action.payload);
-      }
+      // }
     },
     incrementQuantity: (state, action) => {
       const item = state.products.find((item) => item.id === action.payload);
