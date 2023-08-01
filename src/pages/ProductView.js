@@ -11,6 +11,7 @@ function ProductView(props) {
         <img
           src={productData.image}
           className="max-w-[314px] max-h-[409px] p-4"
+          alt="product"
         />
       </div>
       <div className="p-4 overflow-y-scroll">

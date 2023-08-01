@@ -53,7 +53,6 @@ function Registration() {
               setDisable(true);
               setSuccess(true);
               updateProfile(auth.currentUser,{displayName:clientName});
-              const user = userCredential.user;
               setTimeout(()=>{
                 navigate("/signin")
               },2000);
