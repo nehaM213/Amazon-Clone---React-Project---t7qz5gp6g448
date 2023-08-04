@@ -1,9 +1,7 @@
 // import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import {
-  deleteItem,
-} from "../redux/amazonSlice";
+import { deleteFromWishList } from "../redux/amazonSlice";
 import { emptyCart } from "../assets/index";
 import { Link } from "react-router-dom";
 // import axios from "axios";
@@ -39,8 +37,8 @@ function WishList() {
   return (
     <div className="w-full bg-gray-100 p-4">
       {wishList.length > 0 ? (
-        <div className="mx-auto h-auto grid grid-cols-4 gap-4">
-          <div className="w-full h-full bg-white px-4 col-span-3">
+        <div className="mx-auto h-auto">
+          <div className="w-full h-full bg-white px-4">
             <div className="font-titleFont flex items-center justify-between border-b-[1px] border-b-gray-400 py-3">
               <h2 className="text-3xl font-medium">WishList</h2>
               <h4 className="text-xl font-normal">Price</h4>
@@ -71,26 +69,8 @@ function WishList() {
                           &#8377;{item.price}
                         </span>
                       </p>
-                      {/* <div className="bg-[#F0F2F2] flex justify-center items-center gap-1 w-24 py-1 text-center drop-shadow-lg rounded-md ">
-                        <p className="cursor-pointer bg-gray-200 px-1 rounded-md duration-300">
-                          Qty:
-                        </p>
-                        <p
-                          onClick={() => dispatch(decrementQuantity(item.id))}
-                          className="cursor-pointer bg-gray-200 px-1 rounded-md hover:bg-gray-400 duration-300"
-                        >
-                          -
-                        </p>
-                        <p>{item.quantity}</p>
-                        <p
-                          onClick={() => dispatch(incrementQuantity(item.id))}
-                          className="cursor-pointer bg-gray-200 px-1 rounded-md hover:bg-gray-400 duration-300"
-                        >
-                          +
-                        </p>
-                      </div> */}
                       <button
-                        onClick={() => dispatch(deleteItem(item.id))}
+                        onClick={() => dispatch(deleteFromWishList(item.id))}
                         className="bg-red-500 w-36 py-1 rounded-lg text-white mt-2 hover:bg-red-700 active:bg-red-900 duration-300"
                       >
                         Remove Item
@@ -105,34 +85,6 @@ function WishList() {
                 </div>
               ))}
             </div>
-            <div>
-            </div>
-          </div>
-          <div className="w-full h-52 bg-white col-span-1 flex flex-col  justify-center items-center p-4">
-            {/* <div>
-              <p className="font-semibold px-10 py-1 flex items-center justify-between gap-2">
-                Total:{" "}
-                <span className="text-lg font-bold">
-                  &#8377; {totalPrice ? totalPrice : 0}
-                </span>
-              </p>
-            </div> */}
-            {/* <button className="yellowButton" onClick={handleCheckout}>
-              Proceed to Pay
-            </button>
-            {payNow && (
-              <div className="w-full mt-6 flex items-center justify-center">
-                <StripeCheckout
-                  token={payment}
-                  stripeKey="pk_test_51NAuloSDprkVgkWw4QpRGweNTNP4jQYs9p05s9wG5mUikrHseAoVb7aGJjlY5qvziIEhS3GHFjhL6xBJJI7KNev200eTkFlSia"
-                  name="Amazon Clone"
-                  amount={totalPrice * 100}
-                  Label="Place your order and pay"
-                  description={`Your Payment amount is $${totalPrice}`}
-                  email={userInfo.email}
-                />
-              </div>
-            )} */}
           </div>
         </div>
       ) : (

@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToWishList } from "../../redux/amazonSlice";
 import { setResultNotFound } from "../../redux/amazonSlice";
 import { Link } from "react-router-dom";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 function Products() {
   const dispatch=useDispatch();
@@ -80,17 +79,19 @@ function Products() {
             className="bg-white h-auto border-[1px] border-gray-200 py-8 z-30 hover:border-transparent shadow-none hover:shadow-testShadow duration-200 flex flex-col gap-4 cursor-pointer  relative"
           >
             <button
-              className=" absolute top-1 right-1"
+              className=" absolute top-2 right-1"
               style={likeButtonStyle}
               onClick={(e) => {
                 handleAddToWishList(e, item);
               }}
             >
-              {/* {wishList.filter((el) => {
-                return "";
-              })} */}
-              
-              <FavoriteBorderIcon />
+              {/* <span className=" rounded-full border hover:shadow-lg p-1 border-slate-300"> */}
+              {wishList.some((el) => el.id === item.id) ? (
+                <FavoriteIcon className=" text-red-600" />
+              ) : (
+                <FavoriteIcon className=" text-gray-400" />
+              )}
+              {/* </span> */}
             </button>
             <div className="w-full h-auto flex items-center justify-center">
               <img
