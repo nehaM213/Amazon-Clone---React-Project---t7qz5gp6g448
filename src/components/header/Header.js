@@ -126,7 +126,8 @@ function Header() {
             <span
               className="lgl:hidden absolute right-20 top-3"
               onClick={() => {
-                if (size.width < 1024 ) setShowAccountsAndList(!showAccountsAndList);
+                if (size.width < 1024)
+                  setShowAccountsAndList(!showAccountsAndList);
               }}
             >
               <PersonOutlineIcon />
@@ -136,7 +137,7 @@ function Header() {
                 Hello {userInfo.userName}
               </p>
             ) : (
-              <p className="text-sm lgl:text-xs text-white lgl:text-lightText font-light">
+              <p className="text-sm lgl:text-xs text-white lgl:text-lightText font-light lgl:static absolute right-28 top-4">
                 Hello, sign in
               </p>
             )}
