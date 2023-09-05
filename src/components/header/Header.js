@@ -12,6 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserSearch, setResultNotFound, userSignOut } from "../../redux/amazonSlice";
 import { getAuth, signOut } from "firebase/auth";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import UseWindowSize from '../../constants/UseWindowSize';
 
 function Header() {
     const auth = getAuth();
@@ -22,6 +24,7 @@ function Header() {
     const [showAccountsAndList,setShowAccountsAndList]=useState(false);
     const products=useSelector((state)=>state.amazon.products);
     const userInfo=useSelector((state)=>state.amazon.userInfo);
+    const size = UseWindowSize();
     useEffect(()=>{
       if (searchItem.trim().length === 0) {
         handleUserSearch();
@@ -50,13 +53,17 @@ function Header() {
 
   return (
     <div className="w-full sticky top-0 z-50">
-      <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center md1:justify-between sm:justify-between gap-4">
+      <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center lgl:justify-between sm:justify-between gap-4">
         <Link to="/ ">
-          <div className="headerHover">
-            <img className="w-24 mt-2" src={logo} alt="logo"></img>
+          <div className="lgl:headerHover">
+            <img
+              className="w-24 mt-2 lgl:static sm:absolute left-14 top-3"
+              src={logo}
+              alt="logo"
+            ></img>
           </div>
         </Link>
-        <div className="headerHover hidden md1:inline-flex">
+        <div className="headerHover hidden lgl:inline-flex">
           <LocationOnOutlinedIcon />
           <p className="text-sm text-lightText font-light flex flex-col">
             Deliver to{" "}
@@ -109,42 +116,57 @@ function Header() {
             <SearchIcon />
           </span>
         </div>
-        <Link to={userInfo ? "/accountAndList" : "/signin"}>
-          <div className="flex flex-col items-start justify-center headerHover ">
+        <Link
+          to={userInfo ? "/accountAndList" : "/signin"}
+          onClick={(event) => {
+            if (size.width < 1024) event.preventDefault();
+          }}
+        >
+          <div className="flex flex-col items-start justify-center lgl:headerHover">
+            <span
+              className="lgl:hidden absolute right-20 top-3"
+              onClick={() => {
+                if (size.width < 1024 ) setShowAccountsAndList(!showAccountsAndList);
+              }}
+            >
+              <PersonOutlineIcon />
+            </span>
             {userInfo ? (
-              <p className="text-sm text-lightText font-light">
+              <p className="text-sm text-lightText font-light lgl:static absolute right-28 top-4">
                 Hello {userInfo.userName}
               </p>
             ) : (
-              <p className="text-sm md1:text-xs text-white md1:text-lightText font-light">
+              <p className="text-sm lgl:text-xs text-white lgl:text-lightText font-light">
                 Hello, sign in
               </p>
             )}
             <span
               className="text-sm font-semibold -mt-1 text-whiteT
-            hidden md1:inline-flex"
-              onMouseEnter={() => setShowAccountsAndList(true)}
+            hidden lgl:inline-flex"
+              onMouseEnter={() => {
+                if (userInfo) setShowAccountsAndList(true);
+              }}
             >
               Accounts & Lists <span></span>
               <ArrowDropDownOutlinedIcon />
             </span>
             {showAccountsAndList ? (
               <div onMouseLeave={() => setShowAccountsAndList(false)}>
-                <ul className="absolute w-[450px] h-84 top-14 right-48 overflow-y-scroll overflow-x-hidden bg-white border-[1px] border-amazon_blue text-black p-2 flex gap-1 z-50">
+                <ul className="absolute lgl:w-[450px] h-84 top-14 lgl:right-48 sm:right-0 overflow-y-scroll overflow-x-hidden bg-white border-[1px] border-amazon_blue text-black p-2 lgl:flex gap-1 z-50">
                   {accountsLists.map((item) => (
                     <li
                       className="text-sm tracking-wide font-titleFont border-b-[1px] border-b-transparent cursor-pointer duration-200"
                       key={item._id}
                     >
-                      <p className=" font-bold text-lg pb-2">
-                        {item.title}
-                      </p>
+                      <p className=" font-bold text-lg pb-2">{item.title}</p>
                       <ul className="flex flex-col gap-1 font-bodyFont ">
                         {item.listItems.map((data, i) => (
                           <li
                             key={i}
                             className="text-sm tracking-wide border-b-[1px] border-b-transparent hover:border-b-amazon_blue cursor-pointer duration-200"
-                            onClick={(e)=>{handleAccountsAndLists(e,data)}}
+                            onClick={(e) => {
+                              handleAccountsAndLists(e, data);
+                            }}
                           >
                             {data}
                           </li>
@@ -169,7 +191,7 @@ function Header() {
           </p>
         </div>
         <Link to="/cart">
-          <div className="flex items-start justify-center headerHover relative">
+          <div className="flex items-start justify-center lgl:headerHover relative">
             <ShoppingCartIcon />
             <p className="text-xs font-semibold mt-3 text-whiteText">
               Cart{" "}
@@ -182,10 +204,10 @@ function Header() {
         {userInfo && (
           <div
             onClick={handleLogout}
-            className="flex flex-col justify-center items-center headerHover relative"
+            className="lgl:flex flex-col justify-center items-center headerHover relative hidden"
           >
             <LogoutIcon />
-            <p className="hidden md1:inline-flex text-xs font-semibold text-whiteText">
+            <p className="hidden lgl:inline-flex text-xs font-semibold text-whiteText">
               Log out
             </p>
           </div>

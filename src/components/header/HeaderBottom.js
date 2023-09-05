@@ -23,16 +23,16 @@ function HeaderBottom() {
       <ul className="flex items-center gap-2 text-sm tracking-wide">
         <li
           onClick={() => setSidebar(true)}
-          className="headerHover flex items-center gap-1"
+          className="lgl:headerHover lgl:h-[83.42px] sm:h-0 absolute top-4 left-4 lgl:static lgl:inline-flex items-center gap-1"
         >
           <MenuIcon />
-          All
+          <span className='hidden lgl:flex'>All</span>
         </li>
-        <li className="headerHover hidden md:inline-flex">Today's Deals</li>
-        <li className="headerHover hidden md:inline-flex">Customer Service</li>
-        <li className="headerHover hidden md:inline-flex">Gift Cards</li>
-        <li className="headerHover hidden md:inline-flex">Registry</li>
-        <li className="headerHover hidden md:inline-flex">Sell</li>
+        <li className="headerHover hidden lgl:inline-flex">Today's Deals</li>
+        <li className="headerHover hidden lgl:inline-flex">Customer Service</li>
+        <li className="headerHover hidden lgl:inline-flex">Gift Cards</li>
+        <li className="headerHover hidden lgl:inline-flex">Registry</li>
+        <li className="headerHover hidden lgl:inline-flex">Sell</li>
       </ul>
       {/* list items end here */}
       {/* sidenav start here */}
