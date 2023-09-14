@@ -6,11 +6,11 @@ function ProductView(props) {
     const productData = location.state;
     console.log("this",productData.id,"end");
   return (
-    <div className="flex m-10 bg-white h-[400px] p-4]">
+    <div className="lgl:flex lgl:m-10 bg-white lgl:h-[400px] p-4">
       <div>
         <img
           src={productData.image}
-          className="max-w-[314px] max-h-[409px] p-4"
+          className="lgl:max-w-[314px] max-h-[409px] p-4"
           alt="product"
         />
       </div>
@@ -23,7 +23,7 @@ function ProductView(props) {
         {/* <button className=" p-1 my-2 hover:bg-slate-300  rounded-lg">
           Add to Wish List
         </button> */}
-        <div className="border-y-[1px] my-5 p-2">
+        <div className="border-y-[1px] my-5 p-2 hidden md:block">
           <h2 className="p-2 font-bold">Offers</h2>
           <div className="flex">
             <div className="border-[1px] p-2 m-2">
@@ -54,7 +54,7 @@ function ProductView(props) {
           <p>{productData.description}</p>
         </div>
       </div>
-      <div className="w-[600px] p-4">
+      <div className="lgl:w-[600px] p-4">
         <button className=" yellowButton">Add to Cart</button>
         <button className="yellowButton bg-yellow-500 hover:bg-amber-500">Buy Now</button>
       </div>

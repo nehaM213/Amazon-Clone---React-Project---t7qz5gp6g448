@@ -47,7 +47,7 @@ function Cart() {
   return (
     <div className="w-full bg-gray-100 p-4">
       {products.length > 0 ? (
-        <div className="mx-auto h-auto grid grid-cols-4 gap-4">
+        <div className="mx-auto h-auto flex flex-col-reverse lgl:grid grid-cols-4 gap-4">
           <div className="w-full h-full bg-white px-4 col-span-3">
             <div className="font-titleFont flex items-center justify-between border-b-[1px] border-b-gray-400 py-3">
               <h2 className="text-3xl font-medium">Shopping Cart</h2>
@@ -60,8 +60,8 @@ function Cart() {
                   key={item.id}
                   className="w-full border-b-[1px] border-b-gray-300 p-4 flex items-center gap-6"
                 >
-                  <div className="w-full flex item-center justify-between gap-6">
-                    <div className="w-2/5">
+                  <div className="w-full flex  item-center justify-between gap-6">
+                    <div className="lgl:w-2/5">
                       <img
                         className="w-full h-44 object-contain"
                         src={item.image}
@@ -70,8 +70,11 @@ function Cart() {
                     </div>
                     <div className="w-4/5">
                       <h2 className="font-semibold text-lg">{item.title}</h2>
-                      <p className="text-sm">
+                      <p className="text-sm hidden lgl:block">
                         {item.description.substring(0, 200)}
+                      </p>
+                      <p className="text-sm lgl:hidden">
+                        {item.description.substring(0, 100)+"..."}
                       </p>
                       <p className="text-base mt-2">
                         Unit Price:{" "}
@@ -104,7 +107,7 @@ function Cart() {
                         Delete Item
                       </button>
                     </div>
-                    <div className="w-1/5">
+                    <div className="w-1/5 hidden lgl:block">
                       <p className="text-lg font-titleFont font-semibold">
                         &#8377;{item.price * item.quantity}
                       </p>
@@ -149,7 +152,7 @@ function Cart() {
                   token={payment}
                   stripeKey="pk_test_51NAuloSDprkVgkWw4QpRGweNTNP4jQYs9p05s9wG5mUikrHseAoVb7aGJjlY5qvziIEhS3GHFjhL6xBJJI7KNev200eTkFlSia"
                   name="Amazon Clone"
-                  amount={totalPrice*100}
+                  amount={totalPrice * 100}
                   Label="Place your order and pay"
                   description={`Your Payment amount is $${totalPrice}`}
                   email={userInfo.email}

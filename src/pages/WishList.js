@@ -41,7 +41,7 @@ function WishList() {
           <div className="w-full h-full bg-white px-4">
             <div className="font-titleFont flex items-center justify-between border-b-[1px] border-b-gray-400 py-3">
               <h2 className="text-3xl font-medium">WishList</h2>
-              <h4 className="text-xl font-normal">Price</h4>
+              <h4 className="text-xl font-normal hidden lgl:block">Price</h4>
             </div>
             {/* wishList start here */}
             <div>
@@ -76,7 +76,7 @@ function WishList() {
                         Remove Item
                       </button>
                     </div>
-                    <div className="w-1/5">
+                    <div className="w-1/5 hidden lgl:block">
                       <p className="text-lg font-titleFont font-semibold">
                         &#8377;{item.price * item.quantity}
                       </p>
@@ -98,13 +98,13 @@ function WishList() {
           </div>
           <div className="w-96 p-4 bg-white flex flex-col items-center rounded-md shadow-lg">
             <h1 className="font-titleFont text-xl font-bold">
-              Your Cart feels Lonely.
+              Your WishList is Empty.
             </h1>
-            <p className="text-sm text-center">
+            {/* <p className="text-sm text-center">
               {" "}
               Your Shopping cart lives to serve. Give it a purpose - fill it
               with books, electronics, videos, etc. and make it happy.
-            </p>
+            </p> */}
             <Link to="/" className="w-full">
               <button className="yellowButton ">Continue Shopping</button>
             </Link>

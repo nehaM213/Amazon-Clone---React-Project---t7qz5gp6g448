@@ -7,9 +7,9 @@ const initialState = {
   userSearch: "",
   resultNotFound:false
 };
-
+ 
 export const amazonSlice = createSlice({
-  name: "amazon",
+  name: "amazon",//name of the slice
   initialState,
   reducers: {
     addToCart: (state, action) => {
